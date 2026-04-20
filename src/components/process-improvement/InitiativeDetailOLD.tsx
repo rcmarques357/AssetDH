@@ -5,18 +5,18 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ArrowLeft, Edit, Trash2, Plus, Calendar, TrendingUp, List, GanttChart } from 'lucide-react';
-import { ProcessGET, ProcessTask, TaskOLD } from './types';
+import { InitiativeOLD, TaskOLD } from './types';
 import { TaskList } from './TaskList';
 import { TaskGanttChart } from './TaskGanttChart';
 import { TaskForm } from './TaskForm';
-import { format, parse } from 'date-fns';
-import { number } from 'zod';
+import { TaskFiles } from './TaskFiles';
+import { format } from 'date-fns';
+import type { TaskFile } from './types';
 
 interface InitiativeDetailProps {
-  initiative: ProcessGET;
-  task: any;
+  initiative: InitiativeOLD;
   onBack: () => void;
-  onUpdate: (updates: Partial<ProcessGET>) => void;
+  onUpdate: (updates: Partial<InitiativeOLD>) => void;
   onDelete: () => void;
   onEdit: () => void;
   onUpdateTask: (taskId: string, updates: Partial<TaskOLD>) => void;
@@ -29,13 +29,13 @@ const statusColors: Record<string, string> = {
   'on hold': 'bg-gray-500/10 text-gray-500 border-gray-500/20',
 };
 
-export function InitiativeDetail({
-  initiative, 
-  task,
+export function InitiativeDetailOLD({
+  initiative,
   onBack,
   onUpdate,
   onDelete,
   onEdit,
+  onUpdateTask,
 }: InitiativeDetailProps) {
   const [isTaskFormOpen, setIsTaskFormOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<TaskOLD | null>(null);
@@ -46,14 +46,16 @@ export function InitiativeDetail({
       ...taskData,
       id: `t${Date.now()}`,
     };
+    onUpdate({ tasks: [...initiative.tasks, newTask] });
     setIsTaskFormOpen(false);
   };
 
   const handleUpdateTask = (updates: Omit<TaskOLD, 'id'>) => {
     if (editingTask) {
-      const updatedTasks = task.map(task =>
+      const updatedTasks = initiative.tasks.map(task =>
         task.id === editingTask.id ? { ...task, ...updates } : task
       );
+      onUpdate({ tasks: updatedTasks });
     }
     setEditingTask(null);
     setIsTaskFormOpen(false);
@@ -61,6 +63,7 @@ export function InitiativeDetail({
 
   const handleDeleteTask = (taskId: string) => {
     if (window.confirm('Are you sure you want to delete this task?')) {
+      onUpdate({ tasks: initiative.tasks.filter(t => t.id !== taskId) });
     }
   };
 
@@ -70,9 +73,28 @@ export function InitiativeDetail({
   };
 
   const handleQuickTaskUpdate = (taskId: string, updates: Partial<TaskOLD>) => {
-    const updatedTasks = task.map(task =>
+    const updatedTasks = initiative.tasks.map(task =>
       task.id === taskId ? { ...task, ...updates } : task
     );
+    onUpdate({ tasks: updatedTasks });
+  };
+
+  const handleAddFile = (taskId: string, file: Omit<TaskFile, 'id'>) => {
+    const newFile: TaskFile = {
+      ...file,
+      id: `f${Date.now()}`,
+    };
+    const updatedTasks = initiative.tasks.map(task =>
+      task.id === taskId ? { ...task, files: [...task.files, newFile] } : task
+    );
+    onUpdate({ tasks: updatedTasks });
+  };
+
+  const handleDeleteFile = (taskId: string, fileId: string) => {
+    const updatedTasks = initiative.tasks.map(task =>
+      task.id === taskId ? { ...task, files: task.files.filter(f => f.id !== fileId) } : task
+    );
+    onUpdate({ tasks: updatedTasks });
   };
 
   return (
@@ -86,13 +108,13 @@ export function InitiativeDetail({
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="text-sm font-mono text-muted-foreground">
-                {initiative.process_number}
+                {initiative.processNumber}
               </span>
-              <Badge variant="outline" className={statusColors[initiative.process_status]}>
-                {initiative.process_status}
+              <Badge variant="outline" className={statusColors[initiative.status]}>
+                {initiative.status}
               </Badge>
             </div>
-            <h1 className="text-3xl font-bold">{initiative.process_name}</h1>
+            <h1 className="text-3xl font-bold">{initiative.name}</h1>
           </div>
         </div>
         <div className="flex gap-2">
@@ -119,8 +141,8 @@ export function InitiativeDetail({
             <div className="flex items-center gap-3">
               <TrendingUp className="h-8 w-8 text-primary" />
               <div>
-                <div className="text-3xl font-bold">{initiative.id}%</div>
-                <Progress value={90} className="h-2 mt-2" />
+                <div className="text-3xl font-bold">{initiative.completenessRate}%</div>
+                <Progress value={initiative.completenessRate} className="h-2 mt-2" />
               </div>
             </div>
           </CardContent>
@@ -136,7 +158,7 @@ export function InitiativeDetail({
             <div className="flex items-center gap-3">
               <Calendar className="h-8 w-8 text-primary" />
               <div className="text-2xl font-semibold">
-                {format(parse(initiative.process_start_date, 'yyyy-MM-dd', new Date()),'MMM dd, yyyy')}
+                {format(new Date(initiative.startDate), 'MMM dd, yyyy')}
               </div>
             </div>
           </CardContent>
@@ -152,32 +174,40 @@ export function InitiativeDetail({
             <div className="flex items-center gap-3">
               <Calendar className="h-8 w-8 text-primary" />
               <div className="text-2xl font-semibold">
-                {format(parse(initiative.process_completion_date, 'yyyy-MM-dd', new Date()),'MMM dd, yyyy')}
+                {format(new Date(initiative.completionDate), 'MMM dd, yyyy')}
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Issue, Solution and Benefit */}
+      {/* Details */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Card>
+          <CardHeader>
+            <CardTitle>Issue</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground">{initiative.issue}</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Solution</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground">{initiative.solution}</p>
+          </CardContent>
+        </Card>
+      </div>
+
       <Card>
-        <CardHeader>
-          <CardTitle>Issue</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">{initiative.process_issue}</p>
-        </CardContent>
-        <CardHeader>
-          <CardTitle>Solution</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">{initiative.process_solution}</p>
-        </CardContent>
         <CardHeader>
           <CardTitle>Benefits</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">{initiative.process_benefits}</p>
+          <p className="text-muted-foreground">{initiative.benefits}</p>
         </CardContent>
       </Card>
 
@@ -185,7 +215,7 @@ export function InitiativeDetail({
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle>Tasks ({task.length})</CardTitle>
+            <CardTitle>Tasks ({initiative.tasks.length})</CardTitle>
             <Button onClick={() => { setEditingTask(null); setIsTaskFormOpen(true); }}>
               <Plus className="h-4 w-4 mr-2" />
               Add Task
@@ -207,7 +237,7 @@ export function InitiativeDetail({
             
             <TabsContent value="list" className="mt-0">
               <TaskList
-                tasks={task}
+                tasks={initiative.tasks}
                 onEdit={handleEditTask}
                 onDelete={handleDeleteTask}
                 onUpdateStatus={(taskId, status) => handleQuickTaskUpdate(taskId, { status })}
@@ -220,8 +250,8 @@ export function InitiativeDetail({
             
             <TabsContent value="gantt" className="mt-0">
               <TaskGanttChart
-                tasks={task}
-                initiativeStartDate={initiative.process_start_date}
+                tasks={initiative.tasks}
+                initiativeStartDate={initiative.startDate}
               />
             </TabsContent>
           </Tabs>
@@ -243,6 +273,30 @@ export function InitiativeDetail({
             setEditingTask(null);
           }}
         />
+      )}
+
+      {selectedTaskForFiles && (
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-background border rounded-lg shadow-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-2xl font-bold">{selectedTaskForFiles.name}</h2>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setSelectedTaskForFiles(null)}
+                >
+                  <ArrowLeft className="h-5 w-5" />
+                </Button>
+              </div>
+              <TaskFiles
+                files={selectedTaskForFiles.files}
+                onAddFile={(file) => handleAddFile(selectedTaskForFiles.id, file)}
+                onDeleteFile={(fileId) => handleDeleteFile(selectedTaskForFiles.id, fileId)}
+              />
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

@@ -4,30 +4,30 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Plus, Search } from 'lucide-react';
-import { InitiativeCard } from '@/components/process-improvement/InitiativeCard';
-import { InitiativeDetail } from '@/components/process-improvement/InitiativeDetail';
-import { InitiativeForm } from '@/components/process-improvement/InitiativeForm';
-import { Initiative, Task } from '@/components/process-improvement/types';
+import { InitiativeCardOLD } from '@/components/process-improvement/InitiativeCardOLD';
+import { InitiativeDetailOLD } from '@/components/process-improvement/InitiativeDetailOLD';
+import { InitiativeFormOLD } from '@/components/process-improvement/InitiativeFormOLD';
+import { InitiativeOLD, TaskOLD } from '@/components/process-improvement/types';
 import { mockInitiatives } from '@/components/process-improvement/mockData';
 
 export default function ProcessImprovement() {
-  const [initiatives, setInitiatives] = useState<Initiative[]>(mockInitiatives);
-  const [selectedInitiative, setSelectedInitiative] = useState<Initiative | null>(null);
+  const [initiatives, setInitiatives] = useState<InitiativeOLD[]>(mockInitiatives);
+  const [selectedInitiative, setSelectedInitiative] = useState<InitiativeOLD | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [editingInitiative, setEditingInitiative] = useState<Initiative | null>(null);
+  const [editingInitiative, setEditingInitiative] = useState<InitiativeOLD | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('name');
 
-  const calculateInitiativeCompletion = (tasks: Task[]): number => {
+  const calculateInitiativeCompletion = (tasks: TaskOLD[]): number => {
     if (tasks.length === 0) return 0;
     const totalWeight = tasks.reduce((sum, task) => sum + task.weight, 0);
     const weightedCompletion = tasks.reduce((sum, task) => sum + (task.percentCompleted * task.weight), 0);
     return totalWeight > 0 ? Math.round(weightedCompletion / totalWeight) : 0;
   };
 
-  const handleCreateInitiative = (data: { processNumber: string; name: string; description: string; status: Initiative['status']; startDate: string; completionDate: string }) => {
-    const newInitiative: Initiative = {
+  const handleCreateInitiative = (data: { processNumber: string; name: string; issue: string; solution: string; benefits: string; status: InitiativeOLD['status']; startDate: string; completionDate: string }) => {
+    const newInitiative: InitiativeOLD = {
       ...data,
       id: Date.now().toString(),
       completenessRate: 0,
@@ -37,7 +37,7 @@ export default function ProcessImprovement() {
     setIsFormOpen(false);
   };
 
-  const handleUpdateInitiative = (id: string, updates: Partial<Initiative>) => {
+  const handleUpdateInitiative = (id: string, updates: Partial<InitiativeOLD>) => {
     setInitiatives(initiatives.map(init => {
       if (init.id === id) {
         const updated = { ...init, ...updates };
@@ -65,12 +65,12 @@ export default function ProcessImprovement() {
     }
   };
 
-  const handleEditInitiative = (initiative: Initiative) => {
+  const handleEditInitiative = (initiative: InitiativeOLD) => {
     setEditingInitiative(initiative);
     setIsFormOpen(true);
   };
 
-  const handleUpdateTask = (initiativeId: string, taskId: string, updates: Partial<Task>) => {
+  const handleUpdateTask = (initiativeId: string, taskId: string, updates: Partial<TaskOLD>) => {
     const initiative = initiatives.find(i => i.id === initiativeId);
     if (initiative) {
       const updatedTasks = initiative.tasks.map(task => 
@@ -83,7 +83,8 @@ export default function ProcessImprovement() {
   const filteredAndSortedInitiatives = initiatives
     .filter(init => {
       const matchesSearch = init.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           init.description.toLowerCase().includes(searchQuery.toLowerCase());
+                           init.issue.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           init.solution.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesStatus = statusFilter === 'all' || init.status === statusFilter;
       return matchesSearch && matchesStatus;
     })
@@ -103,7 +104,7 @@ export default function ProcessImprovement() {
   if (selectedInitiative) {
     return (
       <PageLayout title="Process Improvement">
-        <InitiativeDetail
+        <InitiativeDetailOLD
           initiative={selectedInitiative}
           onBack={() => setSelectedInitiative(null)}
           onUpdate={(updates) => handleUpdateInitiative(selectedInitiative.id, updates)}
@@ -158,7 +159,7 @@ export default function ProcessImprovement() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="name">Name</SelectItem>
-              <SelectItem value="completion">Completion Rate</SelectItem>
+              <SelectItem value="completion">Completion Date</SelectItem>
               <SelectItem value="startDate">Start Date</SelectItem>
             </SelectContent>
           </Select>
@@ -167,7 +168,7 @@ export default function ProcessImprovement() {
         {/* Initiatives Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {filteredAndSortedInitiatives.map(initiative => (
-            <InitiativeCard
+            <InitiativeCardOLD
               key={initiative.id}
               initiative={initiative}
               onClick={() => setSelectedInitiative(initiative)}
@@ -185,7 +186,7 @@ export default function ProcessImprovement() {
       </div>
 
       {isFormOpen && (
-        <InitiativeForm
+        <InitiativeFormOLD
           initiative={editingInitiative}
           onSave={(data) => {
             if (editingInitiative) {

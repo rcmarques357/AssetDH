@@ -1,6 +1,7 @@
 import React from 'react';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {  Carousel,  CarouselContent,  CarouselItem,  CarouselPrevious,  CarouselNext,} from "@/components/ui/carousel";
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { Database, Zap, FileText, Settings, BarChart3, Map, Package } from 'lucide-react';
@@ -9,7 +10,7 @@ const Index = () => {
   const navigate = useNavigate();
 
   const features = [
-    {
+   /*  {
       icon: Database,
       title: 'Asset Management',
       description: 'Comprehensive tracking and management of electric utility assets including transformers, conductors, and more.',
@@ -50,11 +51,19 @@ const Index = () => {
       description: 'Monitor and improve data quality with automated discrepancy detection and correction workflows.',
       action: () => navigate('/dashboards/gis-discrepancy'),
       color: 'text-red-500'
-    }
+    } */
   ];
 
+  
+  const images = [
+    { src: "/public/HomePageImage.png", alt: "AssetDataQuality" } //,
+   /*  { src: "/images/photo-2.jpg", alt: "Control room" },
+    { src: "/images/photo-3.jpg", alt: "Field team" }, */
+  ];
+
+
   return (
-    <PageLayout title="Welcome to Asset Management System">
+    <PageLayout title="Welcome to the Asset Data Hub Tool">
       <div className="space-y-8">
         {/* Hero Section */}
         <Card className="border-primary/20">
@@ -64,11 +73,34 @@ const Index = () => {
             </div>
             <CardTitle className="text-4xl">Electric Utility Asset Management</CardTitle>
             <CardDescription className="text-lg max-w-3xl mx-auto">
-              A comprehensive platform for managing electric utility assets, integrating GIS and SAP data, 
-              tracking work orders, and ensuring data quality across your infrastructure.
+              A comprehensive platform for managing electric utility assets in Avangrid.
             </CardDescription>
           </CardHeader>
         </Card>
+
+        
+          
+          <Carousel className="relative w-full">
+                  <CarouselContent className="h-[320px]"> 
+                    {images.map((img) => (
+                      <CarouselItem key={img.src} className="p-2">
+                        <div className="relative h-full w-full overflow-hidden rounded-md">
+                          <img
+                            src={img.src}
+                            alt={img.alt}
+                            className="h-full w-full object-cover"
+                            loading="lazy"
+                          />
+                        </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+
+                  {/* <CarouselPrevious /> */}
+                  {/* <CarouselNext /> */}
+                </Carousel>
+
+
 
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -95,8 +127,8 @@ const Index = () => {
         {/* Quick Stats */}
         <Card>
           <CardHeader>
-            <CardTitle>System Overview</CardTitle>
-            <CardDescription>Key metrics and capabilities at a glance</CardDescription>
+            <CardTitle>Asset Overview</CardTitle>
+            <CardDescription>Asset numbers at a glance</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -105,16 +137,16 @@ const Index = () => {
                 <div className="text-sm text-muted-foreground mt-1">Total Assets</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-green-500">98%</div>
-                <div className="text-sm text-muted-foreground mt-1">Data Sync Rate</div>
+                <div className="text-3xl font-bold text-green-500">3K</div>
+                <div className="text-sm text-muted-foreground mt-1">Reclosers, Switches and Sectionalizers</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-orange-500">247</div>
-                <div className="text-sm text-muted-foreground mt-1">Active Work Orders</div>
+                <div className="text-3xl font-bold text-orange-500">1K</div>
+                <div className="text-sm text-muted-foreground mt-1">Voltage Regulators and Capacitor Bank</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-500">12</div>
-                <div className="text-sm text-muted-foreground mt-1">Integration Points</div>
+                <div className="text-3xl font-bold text-blue-500">100K</div>
+                <div className="text-sm text-muted-foreground mt-1">Distribution Transformers</div>
               </div>
             </div>
           </CardContent>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -26,20 +26,19 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { ProcessGET, InitiativeStatusValues} from './types';
-import { toTitleCase } from '@/utils/generalFunc';
+import { InitiativeOLD } from './types';
 
 const initiativeSchema = z.object({
-  process_number: z.string().min(1, 'Process number is required'),
-  process_name: z.string().min(1, 'Name is required'),
-  process_issue: z.string().min(1, 'Issue is required'),
-  process_solution: z.string().min(1, 'Solution is required'),
-  process_benefits: z.string().min(1, 'Benefit is required'),
-  process_status: z.enum(InitiativeStatusValues),
-  process_start_date: z.string().min(1, 'Start date is required'),
-  process_completion_date: z.string().min(1, 'Completion date is required'),
+  processNumber: z.string().min(1, 'Process number is required'),
+  name: z.string().min(1, 'Name is required'),
+  issue: z.string().min(1, 'Issue is required'),
+  solution: z.string().min(1, 'Solution is required'),
+  benefits: z.string().min(1, 'Benefit is required'),
+  status: z.enum(['planned' , 'in progress' , 'completed' , 'on hold']),
+  startDate: z.string().min(1, 'Start date is required'),
+  completionDate: z.string().min(1, 'Completion date is required'),
 }).refine((data) => {
-  return new Date(data.process_start_date) <= new Date(data.process_completion_date);
+  return new Date(data.startDate) <= new Date(data.completionDate);
 }, {
   message: 'Completion date must be after start date',
   path: ['completionDate'],
@@ -48,28 +47,26 @@ const initiativeSchema = z.object({
 type InitiativeFormData = z.infer<typeof initiativeSchema>;
 
 interface InitiativeFormProps {
-  initiative: ProcessGET | null;
-  onSave: (data: { process_number: string; process_name: string; process_issue: string; process_solution: string; process_benefits: string; process_status: ProcessGET['process_status']; process_start_date: string; process_completion_date: string }) => void;
+  initiative: InitiativeOLD | null;
+  onSave: (data: { processNumber: string; name: string; issue: string; solution: string; benefits: string; status: InitiativeOLD['status']; startDate: string; completionDate: string }) => void;
   onCancel: () => void;
-};
+}
 
-export function InitiativeForm({ initiative, onSave, onCancel }: InitiativeFormProps) {
+export function InitiativeFormOLD({ initiative, onSave, onCancel }: InitiativeFormProps) {
   const form = useForm<InitiativeFormData>({
     resolver: zodResolver(initiativeSchema),
     defaultValues: {
-      process_number: initiative?.process_number || '',
-      process_name: initiative?.process_name || '',
-      process_issue: initiative?.process_issue || '',
-      process_solution: initiative?.process_solution || '',
-      process_benefits: initiative?.process_benefits || '',
-      process_status: initiative?.process_status,
-      process_start_date: initiative?.process_start_date || '',
-      process_completion_date: initiative?.process_completion_date || '',
+      processNumber: initiative?.processNumber || '',
+      name: initiative?.name || '',
+      issue: initiative?.issue || '',
+      status: initiative?.status,
+      startDate: initiative?.startDate || '',
+      completionDate: initiative?.completionDate || '',
     },
   });
 
   const onSubmit = (data: InitiativeFormData) => {
-    onSave(data as { process_number: string; process_name: string; process_issue: string; process_solution: string; process_benefits: string; process_status: ProcessGET['process_status']; process_start_date: string; process_completion_date: string });
+    onSave(data as { processNumber: string; name: string; issue: string; solution: string; benefits: string; status: InitiativeOLD['status']; startDate: string; completionDate: string });
     form.reset();
   };
 
@@ -86,12 +83,12 @@ export function InitiativeForm({ initiative, onSave, onCancel }: InitiativeFormP
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
-              name="process_number"
+              name="processNumber"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Process Number</FormLabel>
                   <FormControl>
-                    <Input placeholder="Process Number" {...field} maxLength={10} />
+                    <Input placeholder="Process Number" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -100,12 +97,12 @@ export function InitiativeForm({ initiative, onSave, onCancel }: InitiativeFormP
 
             <FormField
               control={form.control}
-              name="process_name"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Initiative name" {...field} maxLength={255} />
+                    <Input placeholder="Initiative name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -114,7 +111,7 @@ export function InitiativeForm({ initiative, onSave, onCancel }: InitiativeFormP
 
              <FormField
               control={form.control}
-              name="process_issue"
+              name="issue"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Issue</FormLabel>
@@ -123,7 +120,6 @@ export function InitiativeForm({ initiative, onSave, onCancel }: InitiativeFormP
                       placeholder="Describe the issue this initiative addresses..."
                       className="min-h-[80px]"
                       {...field}
-                      maxLength={1500}
                     />
                   </FormControl>
                   <FormMessage />
@@ -133,7 +129,7 @@ export function InitiativeForm({ initiative, onSave, onCancel }: InitiativeFormP
 
             <FormField
               control={form.control}
-              name="process_solution"
+              name="solution"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Solution</FormLabel>
@@ -142,7 +138,6 @@ export function InitiativeForm({ initiative, onSave, onCancel }: InitiativeFormP
                       placeholder="Describe the proposed solution..."
                       className="min-h-[80px]"
                       {...field}
-                      maxLength={1500}
                     />
                   </FormControl>
                   <FormMessage />
@@ -152,7 +147,7 @@ export function InitiativeForm({ initiative, onSave, onCancel }: InitiativeFormP
 
             <FormField
               control={form.control}
-              name="process_benefits"
+              name="benefits"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Benefits</FormLabel>
@@ -161,7 +156,6 @@ export function InitiativeForm({ initiative, onSave, onCancel }: InitiativeFormP
                       placeholder="Describe the expected benefits..."
                       className="min-h-[80px]"
                       {...field}
-                      maxLength={1500}
                     />
                   </FormControl>
                   <FormMessage />
@@ -171,7 +165,7 @@ export function InitiativeForm({ initiative, onSave, onCancel }: InitiativeFormP
 
             <FormField
               control={form.control}
-              name="process_status"
+              name="status"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Status</FormLabel>
@@ -181,12 +175,11 @@ export function InitiativeForm({ initiative, onSave, onCancel }: InitiativeFormP
                         <SelectValue placeholder="Select status" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent>                      
-                      {InitiativeStatusValues.map((status) => (
-                        <SelectItem key={status} value={status}>
-                        {toTitleCase(status)}
-                        </SelectItem>
-                        ))}
+                    <SelectContent>
+                      <SelectItem value="planned">Planned</SelectItem>
+                      <SelectItem value="in progress">In Progress</SelectItem>
+                      <SelectItem value="completed">Completed</SelectItem>
+                      <SelectItem value="on hold">On Hold</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -197,12 +190,12 @@ export function InitiativeForm({ initiative, onSave, onCancel }: InitiativeFormP
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
-                name="process_start_date"
+                name="startDate"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Start Date</FormLabel>
                     <FormControl>
-                      <Input type="date" {...field} value={new Date().toISOString().split('T')[0]}/>
+                      <Input type="date" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -211,7 +204,7 @@ export function InitiativeForm({ initiative, onSave, onCancel }: InitiativeFormP
 
               <FormField
                 control={form.control}
-                name="process_completion_date"
+                name="completionDate"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Target Completion Date</FormLabel>

@@ -1,11 +1,13 @@
-import { Initiative } from './types';
+import { InitiativeOLD } from './types';
 
-export const mockInitiatives: Initiative[] = [
+export const mockInitiatives: InitiativeOLD[] = [
   {
     id: '1',
     processNumber: 'PI-001',
     name: 'Customer to Transformer',
-    description: 'Improve the process of mapping customers to their respective transformers for better service management',
+    issue: 'Customers are not accurately mapped to their respective transformers, causing service management issues',
+    solution: 'Improve the process of mapping customers to their respective transformers using GIS integration',
+    benefits: 'Better service management, faster outage response, improved customer satisfaction',
     status: 'in progress',
     completenessRate: 65,
     startDate: '2024-01-15',
@@ -19,6 +21,10 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-02-15',
         weight: 20,
         percentCompleted: 100,
+        files: [
+          { id: 'f1', name: 'data_collection_plan.pdf', size: 245000, uploadDate: '2024-01-10', type: 'application/pdf' },
+          { id: 'f2', name: 'legacy_system_export.xlsx', size: 1024000, uploadDate: '2024-01-15', type: 'application/vnd.ms-excel' },
+        ],
       },
       {
         id: 't2',
@@ -28,6 +34,9 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-04-30',
         weight: 40,
         percentCompleted: 60,
+        files: [
+          { id: 'f3', name: 'integration_specs.docx', size: 156000, uploadDate: '2024-02-01', type: 'application/msword' },
+        ],
       },
       {
         id: 't3',
@@ -37,6 +46,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-06-15',
         weight: 40,
         percentCompleted: 0,
+        files: [],
       },
     ],
   },
@@ -44,7 +54,9 @@ export const mockInitiatives: Initiative[] = [
     id: '2',
     processNumber: 'PI-002',
     name: 'Conductor Standardization',
-    description: 'Standardize conductor types and specifications across the network',
+    issue: 'Multiple conductor types and specifications are used inconsistently across the network',
+    solution: 'Standardize conductor types and specifications across the network',
+    benefits: 'Reduced inventory costs, simplified maintenance, improved reliability',
     status: 'in progress',
     completenessRate: 45,
     startDate: '2024-02-01',
@@ -58,6 +70,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-03-01',
         weight: 25,
         percentCompleted: 100,
+        files: [],
       },
       {
         id: 't5',
@@ -67,6 +80,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-05-15',
         weight: 35,
         percentCompleted: 50,
+        files: [],
       },
       {
         id: 't6',
@@ -76,6 +90,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-07-31',
         weight: 40,
         percentCompleted: 0,
+        files: [],
       },
     ],
   },
@@ -83,7 +98,9 @@ export const mockInitiatives: Initiative[] = [
     id: '3',
     processNumber: 'PI-003',
     name: 'Tie Points Data Collection',
-    description: 'Comprehensive data collection of all network tie points',
+    issue: 'Network tie points are not comprehensively documented in the system',
+    solution: 'Comprehensive data collection of all network tie points',
+    benefits: 'Better network planning, improved switching operations, enhanced reliability',
     status: 'planned',
     completenessRate: 15,
     startDate: '2024-03-01',
@@ -97,6 +114,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-04-01',
         weight: 30,
         percentCompleted: 50,
+        files: [],
       },
       {
         id: 't8',
@@ -106,6 +124,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-07-31',
         weight: 50,
         percentCompleted: 0,
+        files: [],
       },
       {
         id: 't9',
@@ -115,6 +134,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-09-15',
         weight: 20,
         percentCompleted: 0,
+        files: [],
       },
     ],
   },
@@ -122,7 +142,9 @@ export const mockInitiatives: Initiative[] = [
     id: '4',
     processNumber: 'PI-004',
     name: 'Load Flow Interruption Devices',
-    description: 'Optimize placement and operation of load flow interruption devices',
+    issue: 'Load flow interruption devices are not optimally placed or operated',
+    solution: 'Optimize placement and operation of load flow interruption devices',
+    benefits: 'Reduced outage times, improved system flexibility, better load management',
     status: 'in progress',
     completenessRate: 72,
     startDate: '2024-01-10',
@@ -136,6 +158,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-02-28',
         weight: 30,
         percentCompleted: 100,
+        files: [],
       },
       {
         id: 't11',
@@ -145,6 +168,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-04-15',
         weight: 40,
         percentCompleted: 100,
+        files: [],
       },
       {
         id: 't12',
@@ -154,6 +178,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-05-30',
         weight: 30,
         percentCompleted: 40,
+        files: [],
       },
     ],
   },
@@ -161,7 +186,9 @@ export const mockInitiatives: Initiative[] = [
     id: '5',
     processNumber: 'PI-005',
     name: 'Phase Designation',
-    description: 'Standardize phase designation across the distribution network',
+    issue: 'Phase designation is inconsistent across the distribution network',
+    solution: 'Standardize phase designation across the distribution network',
+    benefits: 'Simplified operations, reduced errors, improved safety',
     status: 'on hold',
     completenessRate: 30,
     startDate: '2024-02-15',
@@ -175,6 +202,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-03-31',
         weight: 25,
         percentCompleted: 100,
+        files: [],
       },
       {
         id: 't14',
@@ -184,6 +212,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-06-30',
         weight: 35,
         percentCompleted: 20,
+        files: [],
       },
       {
         id: 't15',
@@ -193,6 +222,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-10-15',
         weight: 40,
         percentCompleted: 0,
+        files: [],
       },
     ],
   },
@@ -200,7 +230,9 @@ export const mockInitiatives: Initiative[] = [
     id: '6',
     processNumber: 'PI-006',
     name: 'Phase Orientation',
-    description: 'Ensure correct phase orientation throughout the network',
+    issue: 'Phase orientation is not consistent throughout the network',
+    solution: 'Ensure correct phase orientation throughout the network',
+    benefits: 'Improved safety, reduced equipment failures, better power quality',
     status: 'in progress',
     completenessRate: 55,
     startDate: '2024-01-20',
@@ -214,6 +246,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-03-15',
         weight: 30,
         percentCompleted: 100,
+        files: [],
       },
       {
         id: 't17',
@@ -223,6 +256,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-05-31',
         weight: 40,
         percentCompleted: 65,
+        files: [],
       },
       {
         id: 't18',
@@ -232,6 +266,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-07-30',
         weight: 30,
         percentCompleted: 0,
+        files: [],
       },
     ],
   },
@@ -239,7 +274,9 @@ export const mockInitiatives: Initiative[] = [
     id: '7',
     processNumber: 'PI-007',
     name: 'Asset Tagging System',
-    description: 'Implement comprehensive asset tagging system',
+    issue: 'Assets lack a comprehensive tagging system for tracking',
+    solution: 'Implement comprehensive asset tagging system',
+    benefits: 'Improved asset tracking, better maintenance planning, enhanced inventory management',
     status: 'completed',
     completenessRate: 100,
     startDate: '2023-09-01',
@@ -253,6 +290,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2023-10-15',
         weight: 20,
         percentCompleted: 100,
+        files: [],
       },
       {
         id: 't20',
@@ -262,6 +300,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2023-12-31',
         weight: 40,
         percentCompleted: 100,
+        files: [],
       },
       {
         id: 't21',
@@ -271,6 +310,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-02-28',
         weight: 40,
         percentCompleted: 100,
+        files: [],
       },
     ],
   },
@@ -278,7 +318,9 @@ export const mockInitiatives: Initiative[] = [
     id: '8',
     processNumber: 'PI-008',
     name: 'Meter Data Management',
-    description: 'Improve meter data collection and management processes',
+    issue: 'Meter data collection and management processes are inefficient',
+    solution: 'Improve meter data collection and management processes',
+    benefits: 'Better billing accuracy, improved forecasting, enhanced customer service',
     status: 'in progress',
     completenessRate: 40,
     startDate: '2024-02-01',
@@ -292,6 +334,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-03-15',
         weight: 25,
         percentCompleted: 100,
+        files: [],
       },
       {
         id: 't23',
@@ -301,6 +344,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-05-31',
         weight: 35,
         percentCompleted: 50,
+        files: [],
       },
       {
         id: 't24',
@@ -310,6 +354,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-08-30',
         weight: 40,
         percentCompleted: 0,
+        files: [],
       },
     ],
   },
@@ -317,7 +362,9 @@ export const mockInitiatives: Initiative[] = [
     id: '9',
     processNumber: 'PI-009',
     name: 'Outage Management Optimization',
-    description: 'Optimize outage detection and response procedures',
+    issue: 'Outage detection and response procedures need optimization',
+    solution: 'Optimize outage detection and response procedures',
+    benefits: 'Faster response times, reduced outage duration, improved customer satisfaction',
     status: 'planned',
     completenessRate: 20,
     startDate: '2024-03-15',
@@ -331,6 +378,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-04-30',
         weight: 30,
         percentCompleted: 65,
+        files: [],
       },
       {
         id: 't26',
@@ -340,6 +388,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-08-31',
         weight: 50,
         percentCompleted: 0,
+        files: [],
       },
       {
         id: 't27',
@@ -349,6 +398,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-10-15',
         weight: 20,
         percentCompleted: 0,
+        files: [],
       },
     ],
   },
@@ -356,7 +406,9 @@ export const mockInitiatives: Initiative[] = [
     id: '10',
     processNumber: 'PI-010',
     name: 'Vegetation Management',
-    description: 'Improve vegetation management along power lines',
+    issue: 'Vegetation management along power lines needs improvement',
+    solution: 'Improve vegetation management along power lines',
+    benefits: 'Reduced outages, improved reliability, lower maintenance costs',
     status: 'in progress',
     completenessRate: 58,
     startDate: '2024-01-05',
@@ -370,6 +422,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-03-01',
         weight: 25,
         percentCompleted: 100,
+        files: [],
       },
       {
         id: 't29',
@@ -379,6 +432,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-06-30',
         weight: 35,
         percentCompleted: 70,
+        files: [],
       },
       {
         id: 't30',
@@ -388,6 +442,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-12-15',
         weight: 40,
         percentCompleted: 35,
+        files: [],
       },
     ],
   },
@@ -395,7 +450,9 @@ export const mockInitiatives: Initiative[] = [
     id: '11',
     processNumber: 'PI-011',
     name: 'Pole Inspection Program',
-    description: 'Systematic pole inspection and maintenance program',
+    issue: 'Lack of systematic pole inspection and maintenance program',
+    solution: 'Implement systematic pole inspection and maintenance program',
+    benefits: 'Improved safety, reduced failures, extended asset life',
     status: 'in progress',
     completenessRate: 48,
     startDate: '2024-01-15',
@@ -409,6 +466,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-02-28',
         weight: 20,
         percentCompleted: 100,
+        files: [],
       },
       {
         id: 't32',
@@ -418,6 +476,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-09-30',
         weight: 60,
         percentCompleted: 45,
+        files: [],
       },
       {
         id: 't33',
@@ -427,6 +486,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-11-30',
         weight: 20,
         percentCompleted: 0,
+        files: [],
       },
     ],
   },
@@ -434,7 +494,9 @@ export const mockInitiatives: Initiative[] = [
     id: '12',
     processNumber: 'PI-012',
     name: 'Transformer Load Balancing',
-    description: 'Balance loads across transformers for optimal performance',
+    issue: 'Transformer loads are not balanced for optimal performance',
+    solution: 'Balance loads across transformers for optimal performance',
+    benefits: 'Reduced equipment stress, improved efficiency, extended transformer life',
     status: 'planned',
     completenessRate: 10,
     startDate: '2024-04-01',
@@ -448,6 +510,7 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-05-31',
         weight: 35,
         percentCompleted: 30,
+        files: [],
       },
       {
         id: 't35',
@@ -457,201 +520,150 @@ export const mockInitiatives: Initiative[] = [
         deadline: '2024-09-30',
         weight: 40,
         percentCompleted: 0,
+        files: [],
       },
       {
         id: 't36',
         name: 'Implementation',
-        description: 'Implement load balancing changes',
+        description: 'Implement load balancing',
         status: 'not started',
         deadline: '2024-12-15',
         weight: 25,
         percentCompleted: 0,
+        files: [],
       },
     ],
   },
   {
     id: '13',
     processNumber: 'PI-013',
-    name: 'Emergency Response Planning',
-    description: 'Enhance emergency response capabilities',
+    name: 'Smart Grid Integration',
+    issue: 'Legacy systems are not integrated with smart grid technologies',
+    solution: 'Integrate smart grid technologies with existing systems',
+    benefits: 'Real-time monitoring, better demand response, improved grid efficiency',
     status: 'in progress',
-    completenessRate: 75,
-    startDate: '2023-11-01',
-    completionDate: '2024-04-30',
+    completenessRate: 35,
+    startDate: '2024-01-01',
+    completionDate: '2024-12-31',
     tasks: [
       {
         id: 't37',
-        name: 'Risk Assessment',
-        description: 'Identify emergency scenarios',
+        name: 'Technology Assessment',
+        description: 'Evaluate smart grid technologies',
         status: 'completed',
-        deadline: '2024-01-15',
-        weight: 25,
+        deadline: '2024-03-31',
+        weight: 30,
         percentCompleted: 100,
+        files: [],
       },
       {
         id: 't38',
-        name: 'Response Protocols',
-        description: 'Develop response protocols',
-        status: 'completed',
-        deadline: '2024-03-01',
+        name: 'Pilot Project',
+        description: 'Run smart grid pilot',
+        status: 'in progress',
+        deadline: '2024-08-31',
         weight: 40,
-        percentCompleted: 100,
+        percentCompleted: 50,
+        files: [],
       },
       {
         id: 't39',
-        name: 'Training & Drills',
-        description: 'Conduct staff training',
-        status: 'in progress',
-        deadline: '2024-04-30',
-        weight: 35,
-        percentCompleted: 50,
+        name: 'Full Deployment',
+        description: 'Deploy across network',
+        status: 'not started',
+        deadline: '2024-12-31',
+        weight: 30,
+        percentCompleted: 0,
+        files: [],
       },
     ],
   },
   {
     id: '14',
     processNumber: 'PI-014',
-    name: 'Smart Grid Integration',
-    description: 'Integrate smart grid technologies',
+    name: 'Emergency Response Planning',
+    issue: 'Emergency response procedures need updating and standardization',
+    solution: 'Update and standardize emergency response procedures',
+    benefits: 'Faster emergency response, improved safety, better coordination',
     status: 'planned',
-    completenessRate: 8,
-    startDate: '2024-05-01',
-    completionDate: '2025-05-31',
+    completenessRate: 25,
+    startDate: '2024-03-01',
+    completionDate: '2024-09-30',
     tasks: [
       {
         id: 't40',
-        name: 'Technology Assessment',
-        description: 'Evaluate smart grid technologies',
+        name: 'Procedure Review',
+        description: 'Review current emergency procedures',
         status: 'in progress',
-        deadline: '2024-07-31',
-        weight: 30,
-        percentCompleted: 25,
+        deadline: '2024-04-30',
+        weight: 35,
+        percentCompleted: 70,
+        files: [],
       },
       {
         id: 't41',
-        name: 'Pilot Program',
-        description: 'Deploy pilot smart grid system',
+        name: 'Standard Development',
+        description: 'Develop standardized procedures',
         status: 'not started',
-        deadline: '2024-12-31',
+        deadline: '2024-07-31',
         weight: 40,
         percentCompleted: 0,
+        files: [],
       },
       {
         id: 't42',
-        name: 'Full Deployment',
-        description: 'Roll out smart grid network-wide',
+        name: 'Training',
+        description: 'Train staff on new procedures',
         status: 'not started',
-        deadline: '2025-05-31',
-        weight: 30,
+        deadline: '2024-09-30',
+        weight: 25,
         percentCompleted: 0,
+        files: [],
       },
     ],
   },
   {
     id: '15',
     processNumber: 'PI-015',
-    name: 'Workforce Scheduling Optimization',
-    description: 'Optimize crew scheduling and dispatching',
+    name: 'Asset Performance Analytics',
+    issue: 'Asset performance data is not being analyzed effectively',
+    solution: 'Implement asset performance analytics system',
+    benefits: 'Predictive maintenance, reduced downtime, optimized asset replacement',
     status: 'in progress',
-    completenessRate: 62,
-    startDate: '2024-01-10',
-    completionDate: '2024-06-30',
+    completenessRate: 52,
+    startDate: '2024-02-15',
+    completionDate: '2024-10-31',
     tasks: [
       {
         id: 't43',
-        name: 'Current State Analysis',
-        description: 'Analyze current scheduling process',
+        name: 'Data Integration',
+        description: 'Integrate asset performance data sources',
         status: 'completed',
-        deadline: '2024-02-15',
-        weight: 25,
+        deadline: '2024-04-30',
+        weight: 35,
         percentCompleted: 100,
+        files: [],
       },
       {
         id: 't44',
-        name: 'Software Selection',
-        description: 'Select scheduling software',
-        status: 'completed',
-        deadline: '2024-04-01',
-        weight: 30,
-        percentCompleted: 100,
+        name: 'Analytics Development',
+        description: 'Develop analytics models',
+        status: 'in progress',
+        deadline: '2024-08-31',
+        weight: 45,
+        percentCompleted: 60,
+        files: [],
       },
       {
         id: 't45',
-        name: 'Implementation',
-        description: 'Implement new scheduling system',
-        status: 'in progress',
-        deadline: '2024-06-30',
-        weight: 45,
-        percentCompleted: 40,
+        name: 'Dashboard Deployment',
+        description: 'Deploy analytics dashboards',
+        status: 'not started',
+        deadline: '2024-10-31',
+        weight: 20,
+        percentCompleted: 0,
+        files: [],
       },
     ],
   },
 ];
-
-/* Django API Integration Example:
- 
- * Django Models:
- * 
- * class Initiative(models.Model):
- *     STATUS_CHOICES = [
- *         ('planned', 'Planned'),
- *         ('in progress', 'In Progress'),
- *         ('completed', 'Completed'),
- *         ('on hold', 'On Hold'),
- *     ]
- *     
- *     process_number = models.CharField(max_length=20, unique=True)
- *     name = models.CharField(max_length=200)
- *     description = models.TextField()
- *     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
- *     completeness_rate = models.IntegerField(default=0)
- *     start_date = models.DateField()
- *     completion_date = models.DateField()
- *     created_at = models.DateTimeField(auto_now_add=True)
- *     updated_at = models.DateTimeField(auto_now=True)
- * 
- * class Task(models.Model):
- *     STATUS_CHOICES = [
- *         ('not started', 'Not Started'),
- *         ('in progress', 'In Progress'),
- *         ('completed', 'Completed'),
- *         ('delayed', 'Delayed'),
- *     ]
- *     
- *     initiative = models.ForeignKey(Initiative, related_name='tasks', on_delete=models.CASCADE)
- *     name = models.CharField(max_length=200)
- *     description = models.TextField()
- *     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
- *     deadline = models.DateField()
- *     weight = models.IntegerField()
- *     percent_completed = models.IntegerField(default=0)
- *     created_at = models.DateTimeField(auto_now_add=True)
- *     updated_at = models.DateTimeField(auto_now=True)
- * 
- * Django REST Framework Serializers:
- * 
- * class TaskSerializer(serializers.ModelSerializer):
- *     class Meta:
- *         model = Task
- *         fields = '__all__'
- * 
- * class InitiativeSerializer(serializers.ModelSerializer):
- *     tasks = TaskSerializer(many=True, read_only=True)
- *     
- *     class Meta:
- *         model = Initiative
- *         fields = '__all__'
- * 
- * Django Views/API Endpoints:
- * 
- * GET    /api/initiatives/              - List all initiatives
- * POST   /api/initiatives/              - Create new initiative
- * GET    /api/initiatives/{id}/         - Get initiative details
- * PUT    /api/initiatives/{id}/         - Update initiative
- * DELETE /api/initiatives/{id}/         - Delete initiative
- * 
- * GET    /api/initiatives/{id}/tasks/   - List tasks for initiative
- * POST   /api/initiatives/{id}/tasks/   - Create task
- * PUT    /api/tasks/{id}/               - Update task
- * DELETE /api/tasks/{id}/               - Delete task
- */

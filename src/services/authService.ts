@@ -1,7 +1,7 @@
 // Authentication Service for Django JWT Integration
 // Handles login, logout, token refresh, and user session management
 
-import { api } from '@/utils/api';
+import { api } from '@/utils/apiOLD';
 
 /**
  * Django Authentication Endpoints:

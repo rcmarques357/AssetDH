@@ -5,18 +5,19 @@ import { Progress } from '@/components/ui/progress';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import { Edit, Trash2, Calendar, AlertTriangle } from 'lucide-react';
-import { Task, TaskStatus } from './types';
+import { TaskOLD, TaskStatusOLD } from './types';
 import { format, isPast } from 'date-fns';
 
 interface TaskListProps {
-  tasks: Task[];
-  onEdit: (task: Task) => void;
+  tasks: TaskOLD[];
+  onEdit: (task: TaskOLD) => void;
   onDelete: (taskId: string) => void;
-  onUpdateStatus: (taskId: string, status: TaskStatus) => void;
+  onUpdateStatus: (taskId: string, status: TaskStatusOLD) => void;
   onUpdateProgress: (taskId: string, percentCompleted: number) => void;
+  onViewFiles: (task: TaskOLD) => void;
 }
 
-const taskStatusColors: Record<TaskStatus, string> = {
+const taskStatusColors: Record<TaskStatusOLD, string> = {
   'not started': 'bg-gray-500/10 text-gray-500 border-gray-500/20',
   'in progress': 'bg-blue-500/10 text-blue-500 border-blue-500/20',
   completed: 'bg-green-500/10 text-green-500 border-green-500/20',
@@ -24,7 +25,7 @@ const taskStatusColors: Record<TaskStatus, string> = {
 };
 
 export function TaskList({ tasks, onEdit, onDelete, onUpdateStatus, onUpdateProgress }: TaskListProps) {
-  const isOverdue = (task: Task) => {
+  const isOverdue = (task: TaskOLD) => {
     return isPast(new Date(task.deadline)) && task.percentCompleted < 100;
   };
 
@@ -76,7 +77,7 @@ export function TaskList({ tasks, onEdit, onDelete, onUpdateStatus, onUpdateProg
                 <label className="text-xs text-muted-foreground mb-1 block">Status</label>
                 <Select
                   value={task.status}
-                  onValueChange={(value) => onUpdateStatus(task.id, value as TaskStatus)}
+                  onValueChange={(value) => onUpdateStatus(task.id, value as TaskStatusOLD)}
                 >
                   <SelectTrigger className="h-9">
                     <SelectValue />

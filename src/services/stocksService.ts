@@ -1,7 +1,7 @@
 // Stocks Service for Django API Integration
 // Handles financial market data API calls
 
-import { api } from '@/utils/api';
+import { api } from '@/utils/apiOLD';
 import { Stock, MarketIndex, CurrencyPair, Cryptocurrency } from '@/utils/stocksApi';
 
 /**

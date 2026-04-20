@@ -4,11 +4,11 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { Edit, Trash2, Calendar, TrendingUp } from 'lucide-react';
-import { ProcessGET } from './types';
-import { format, parse } from 'date-fns';
+import { InitiativeOLD } from './types';
+import { format } from 'date-fns';
 
 interface InitiativeCardProps {
-  initiative: ProcessGET;
+  initiative: InitiativeOLD;
   onClick: () => void;
   onEdit: () => void;
   onDelete: () => void;
@@ -21,7 +21,7 @@ const statusColors: Record<string, string> = {
   'on hold': 'bg-gray-500/10 text-gray-500 border-gray-500/20',
 };
 
-export function InitiativeCard({ initiative, onClick, onEdit, onDelete }: InitiativeCardProps) {
+export function InitiativeCardOLD({ initiative, onClick, onEdit, onDelete }: InitiativeCardProps) {
   const handleEdit = (e: React.MouseEvent) => {
     e.stopPropagation();
     onEdit();
@@ -39,13 +39,13 @@ export function InitiativeCard({ initiative, onClick, onEdit, onDelete }: Initia
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-xs font-mono text-muted-foreground">
-                {initiative.process_number}
+                {initiative.processNumber}
               </span>
-              <Badge variant="outline" className={statusColors[initiative.process_status]}>
-                {initiative.process_status}
+              <Badge variant="outline" className={statusColors[initiative.status]}>
+                {initiative.status}
               </Badge>
             </div>
-            <CardTitle className="text-lg">{initiative.process_name}</CardTitle>
+            <CardTitle className="text-lg">{initiative.name}</CardTitle>
           </div>
           <div className="flex gap-1">
             <Button size="icon" variant="ghost" onClick={handleEdit}>
@@ -58,31 +58,41 @@ export function InitiativeCard({ initiative, onClick, onEdit, onDelete }: Initia
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-sm text-muted-foreground line-clamp-2">
-          <span className="text-muted-foreground block">Issue</span>
-          {initiative.process_issue}
-        </p>
+        <div className="space-y-2 text-sm">
+          <div>
+            <span className="font-semibold text-foreground">Issue: </span>
+            <span className="text-muted-foreground line-clamp-1">{initiative.issue}</span>
+          </div>
+          <div>
+            <span className="font-semibold text-foreground">Solution: </span>
+            <span className="text-muted-foreground line-clamp-1">{initiative.solution}</span>
+          </div>
+        </div>
 
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground">Progress</span>
             <div className="flex items-center gap-2">
               <TrendingUp className="h-4 w-4 text-primary" />
-              <span className="font-semibold">{initiative.id}%</span>
+              <span className="font-semibold">{initiative.completenessRate}%</span>
             </div>
           </div>
-          <Progress value={10} className="h-2" />
+          <Progress value={initiative.completenessRate} className="h-2" />
         </div>
 
         <div className="flex items-center justify-between text-xs text-muted-foreground">
           <div className="flex items-center gap-1">
             <Calendar className="h-3 w-3" />
-            <span>{format(parse(initiative.process_start_date, 'yyyy-MM-dd', new Date()),'MMM dd, yyyy')} </span>
+            <span>{format(new Date(initiative.startDate), 'MMM dd, yyyy')}</span>
           </div>
           <div className="flex items-center gap-1">
             <Calendar className="h-3 w-3" />
-            <span>{format(parse(initiative.process_completion_date, 'yyyy-MM-dd', new Date()),'MMM dd, yyyy')} </span>
+            <span>{format(new Date(initiative.completionDate), 'MMM dd, yyyy')}</span>
           </div>
+        </div>
+
+        <div className="text-xs text-muted-foreground">
+          {initiative.tasks.length} {initiative.tasks.length === 1 ? 'task' : 'tasks'}
         </div>
       </CardContent>
     </Card>

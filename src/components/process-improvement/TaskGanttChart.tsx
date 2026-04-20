@@ -1,15 +1,15 @@
 import React from 'react';
-import { Task } from './types';
+import { TaskOLD } from './types';
 import { format, differenceInDays, min, max } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { Calendar } from 'lucide-react';
 
 interface TaskGanttChartProps {
-  tasks: Task[];
+  tasks: TaskOLD[];
   initiativeStartDate: string;
 }
 
-const taskStatusColors: Record<Task['status'], string> = {
+const taskStatusColors: Record<TaskOLD['status'], string> = {
   'not started': 'bg-gray-500',
   'in progress': 'bg-blue-500',
   completed: 'bg-green-500',

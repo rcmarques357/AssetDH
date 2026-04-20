@@ -27,7 +27,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
-import { Task } from './types';
+import { TaskOLD } from './types';
 
 const taskSchema = z.object({
   name: z.string().min(1, 'Task name is required'),
@@ -41,8 +41,8 @@ const taskSchema = z.object({
 type TaskFormData = z.infer<typeof taskSchema>;
 
 interface TaskFormProps {
-  task: Task | null;
-  onSave: (data: Omit<Task, 'id'>) => void;
+  task: TaskOLD | null;
+  onSave: (data: Omit<TaskOLD, 'id'>) => void;
   onCancel: () => void;
 }
 
@@ -60,7 +60,7 @@ export function TaskForm({ task, onSave, onCancel }: TaskFormProps) {
   });
 
   const onSubmit = (data: TaskFormData) => {
-    onSave(data as Omit<Task, 'id'>);
+    onSave(data as Omit<TaskOLD, 'id'>);
     form.reset();
   };
 

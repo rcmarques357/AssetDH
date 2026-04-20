@@ -1,7 +1,7 @@
 // Assets Service for Django API Integration
 // Handles all asset-related API calls
 
-import { api } from '@/utils/api';
+import { api } from '@/utils/apiOLD';
 
 /**
  * Django Asset Endpoints:
