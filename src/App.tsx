@@ -6,30 +6,17 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import Stocks from "./pages/Stocks";
-import Markets from "./pages/Markets";
-import Currencies from "./pages/Currencies";
-import Global from "./pages/Global";
-import Portfolio from "./pages/Portfolio";
-import Performance from "./pages/Performance";
-import Analysis from "./pages/Analysis";
-import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
-import Assets from "./pages/Assets";
 import Documentation from "./pages/Documentation";
 import GovernanceStandards from "./pages/GovernanceStandards";
 import CustomerTransformerDetection from "./pages/CustomerTransformerDetection";
 import Reports from "./pages/Reports";
-import WorkOrders from "./pages/WorkOrders";
 import WorkOrdersOnHold from "./pages/WorkOrdersOnHold";
 import GISDiscrepancy from "./pages/GISDiscrepancy";
-import GISIntegration from "./pages/GISIntegration";
-import SAPIntegration from "./pages/SAPIntegration";
 import AssetDataProcess from "./pages/AssetDataProcess";
 import ProcessesProcedures from "./pages/ProcessesProcedures";
 import Maintenance from "./pages/Maintenance";
 import TrainingTutorials from "./pages/TrainingTutorials";
-import ProcessImprovement from "./pages/ProcessImprovement";
 import APIConnection from "./pages/APIConnection";
 import APIConnectionPOST from "./pages/APIConnectionPOST";
 import ProcessImprovementNEW from "./pages/ProcessImprovementNEW";
@@ -47,21 +34,9 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/dashboards/asset-data-process" element={<AssetDataProcess />} />
-            <Route path="/assets" element={<Assets />} />
-            <Route path="/gis" element={<GISIntegration />} />
-            <Route path="/sap" element={<SAPIntegration />} />
             <Route path="/maintenance" element={<Maintenance />} />
-            <Route path="/stocks" element={<Stocks />} />
-            <Route path="/markets" element={<Markets />} />
-            <Route path="/currencies" element={<Currencies />} />
-            <Route path="/global" element={<Global />} />
-            <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/performance" element={<Performance />} />
-            <Route path="/analysis" element={<Analysis />} />
-            <Route path="/analytics" element={<Analytics />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/reports" element={<Reports />} />
-            <Route path="/workorders" element={<WorkOrders />} />
             <Route path="/workorders-on-hold" element={<WorkOrdersOnHold />} />
             <Route path="/documentation" element={<Documentation />} />
             <Route path="/documentation/governance" element={<GovernanceStandards />} />
@@ -72,7 +47,6 @@ const App = () => (
             <Route path="/process-improvement-new" element={<ProcessImprovementNEW />} />
             <Route path="/api-connection" element={<APIConnection />} />
             <Route path="/api-connection-post" element={<APIConnectionPOST />} />
-            <Route path="/process-improvement" element={<ProcessImprovement/>} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
