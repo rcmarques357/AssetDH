@@ -80,6 +80,8 @@ export default function ProcessImprovementNEW() {
         
         if (error !== undefined) {
           console.log("Error Handle: ", error);
+          console.log("data: ",data);
+
           toast.error("Error", { description: `The process creation failed! Error: ${error}` });
           }
         else{
@@ -100,7 +102,7 @@ export default function ProcessImprovementNEW() {
           setError(error)
         if (data)
           setItems(data);
-          //console.log(data)
+          console.log(data)
         setLoading(false);
       }) ();
       return () => controller.abort();
@@ -161,9 +163,9 @@ export default function ProcessImprovementNEW() {
             <SelectContent>
               <SelectItem value="all">All Statuses</SelectItem>
               <SelectItem value="planned">Planned</SelectItem>
-              <SelectItem value="in progress">In Progress</SelectItem>
+              <SelectItem value="in_progress">In Progress</SelectItem>
               <SelectItem value="completed">Completed</SelectItem>
-              <SelectItem value="on hold">On Hold</SelectItem>
+              <SelectItem value="on_hold">On Hold</SelectItem>
             </SelectContent>
           </Select>
 

@@ -1,15 +1,15 @@
 export type InitiativeStatus =
-  | 'not started'
-  | 'in progress'
-  | 'on hold'
+  | 'not_started'
+  | 'in_progress'
+  | 'on_hold'
   | 'cancelled'
   | 'blocked'
   | 'completed';
 
 export const InitiativeStatusValues = [
-  'not started', 'planned',
-  'in progress',
-  'on hold',
+  'not_started', 'planned',
+  'in_progress',
+  'on_hold',
   'cancelled',
   'blocked',
   'completed'] as const;
